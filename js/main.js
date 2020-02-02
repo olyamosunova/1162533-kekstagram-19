@@ -24,7 +24,6 @@ var socialCaption = bigPicture.querySelector('.social__caption');
 var likesCount = bigPicture.querySelector('.likes-count');
 var commentsCount = bigPicture.querySelector('.comments-count');
 var socialComments = bigPicture.querySelector('.social__comments');
-var socialCommentsList = socialComments.querySelectorAll('.social__comment');
 var socialComentCount = bigPicture.querySelector('.social__comment-count');
 var commentsLoader = bigPicture.querySelector('.comments-loader');
 
@@ -82,6 +81,13 @@ var renderPictures = function () {
   pictures.appendChild(fragment);
 };
 
+var removeComments = function () {
+  var socialCommentsList = socialComments.querySelectorAll('.social__comment');
+  for (var b = 0; b < socialCommentsList.length; b++) {
+    socialComments.removeChild(socialCommentsList[b]);
+  }
+};
+
 var showComments = function () {
   var fragment = document.createDocumentFragment();
   for (var a = 0; a < publications[0].comments.length; a++) {
@@ -90,9 +96,7 @@ var showComments = function () {
     newSocialComment.innerHTML = '<img class="social__picture" src=' + publications[0].comments[a].avatar + ' "alt="' + publications[0].comments[a].name + '"width="35" height="35"><p class="social__text">' + publications[0].comments[a].message + '</p>';
     fragment.appendChild(newSocialComment);
   }
-  for (var b = 0; b < socialCommentsList.length; b++) {
-    socialComments.removeChild(socialCommentsList[b]);
-  }
+  removeComments();
   socialComments.appendChild(fragment);
 };
 
