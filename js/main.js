@@ -75,33 +75,29 @@ var createPictureElement = function (user) {
 
 var renderPictures = function () {
   var fragment = document.createDocumentFragment();
-  var publications = createPublications();
   for (var i = 0; i < publications.length; i++) {
     fragment.appendChild(createPictureElement(publications[i]));
   }
   pictures.appendChild(fragment);
-  return publications;
 };
 
-var getBigPicture = function () {
-  var picturesList = renderPictures();
+var showComments = function () {
+  var fragment = document.createDocumentFragment();
+  for (var a = 0; a < publications[0].comments.length; a++) {
+    var newSocialComment = document.createElement('li');
+    newSocialComment.className = 'social__comment';
+    newSocialComment.innerHTML = '<img class="social__picture" src=' + publications[0].comments[a].avatar + ' "alt="' + publications[0].comments[a].name + '"width="35" height="35"><p class="social__text">' + publications[0].comments[a].message + '</p>';
+    fragment.appendChild(newSocialComment);
+  }
+  socialComments.appendChild(fragment);
+};
 
+var showBigPicture = function () {
   bigPicture.classList.remove('hidden');
-  bigPictureImg.src = picturesList[0].url;
-  likesCount.textContent = picturesList[0].likes;
-  commentsCount.textContent = picturesList[0].comments.length;
-  socialCaption.textContent = picturesList[0].description;
-
-  var showComments = function () {
-    var fragment = document.createDocumentFragment();
-    for (var a = 0; a < picturesList[0].comments.length; a++) {
-      var newSocialComment = document.createElement('li');
-      newSocialComment.className = 'social__comment';
-      newSocialComment.innerHTML = '<img class="social__picture" src=' + picturesList[0].comments[a].avatar + ' "alt="' + picturesList[0].comments[a].name + '"width="35" height="35"><p class="social__text">' + picturesList[0].comments[a].message + '</p>';
-      fragment.appendChild(newSocialComment);
-    }
-    socialComments.appendChild(fragment);
-  };
+  bigPictureImg.src = publications[0].url;
+  likesCount.textContent = publications[0].likes;
+  commentsCount.textContent = publications[0].comments.length;
+  socialCaption.textContent = publications[0].description;
 
   showComments();
 
@@ -110,4 +106,6 @@ var getBigPicture = function () {
   BODY.classList.add('modal-open');
 };
 
-getBigPicture();
+var publications = createPublications();
+renderPictures();
+showBigPicture();
