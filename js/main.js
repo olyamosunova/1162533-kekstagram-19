@@ -38,6 +38,44 @@ var effectLevelValue = effectLevel.querySelector('.effect-level__value').value;
 var effectRadios = imgUploadOverlay.querySelectorAll('.effects__radio');
 var imgUploadPreview = imgUploadOverlay.querySelector('.img-upload__preview');
 
+var effecstList = {
+  none: {
+    class: 'effects__preview--none'
+  },
+  chrome: {
+    class: 'effects__preview--chrome',
+    filter: 'grayscale',
+    min: 0,
+    max: 1
+  },
+  sepia: {
+    class: 'effects__preview--sepia',
+    filter: 'sepia',
+    min: 0,
+    max: 1
+  },
+  marvin: {
+    class: 'effects__preview--invert',
+    filter: 'invert',
+    min: 0,
+    max: 100,
+    unit: '%'
+  },
+  phobos: {
+    class: 'effects__preview--blur',
+    filter: 'blur',
+    min: 0,
+    max: 3,
+    unit: 'px'
+  },
+  heat: {
+    class: 'effects__preview--brightness',
+    filter: 'brightness',
+    min: 1,
+    max: 3,
+  }
+};
+
 var getRandomInteger = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
@@ -111,6 +149,18 @@ var showComments = function () {
   socialComments.appendChild(fragment);
 };
 
+var sliderShowOrHidden = function (elem) {
+  return elem.value !== 'none' ? effectLevel.classList.remove('hidden') : effectLevel.classList.add('hidden');
+};
+
+var applyEffect = function (max, min, percent, effect, unit) {
+  effectLevelValue = percent * (max - min) + min;
+
+  var unitEffect = unit || '';
+  var effectPicture = effect + '(' + effectLevelValue + unitEffect + ')';
+  imgUploadPreview.style.filter = effectPicture;
+};
+
 var showBigPicture = function () {
   bigPicture.classList.remove('hidden');
   bigPictureImg.src = publications[0].url;
@@ -149,68 +199,18 @@ document.addEventListener('keydown', function (evt) {
   }
 });
 
-var effecstList = {
-  none: {
-    class: 'effects__preview--none'
-  },
-  chrome: {
-    class: 'effects__preview--chrome',
-    filter: 'grayscale',
-    min: 0,
-    max: 1
-  },
-  sepia: {
-    class: 'effects__preview--sepia',
-    filter: 'sepia',
-    min: 0,
-    max: 1
-  },
-  marvin: {
-    class: 'effects__preview--invert',
-    filter: 'invert',
-    min: 0,
-    max: 100,
-    unit: '%'
-  },
-  phobos: {
-    class: 'effects__preview--blur',
-    filter: 'blur',
-    min: 0,
-    max: 3,
-    unit: 'px'
-  },
-  heat: {
-    class: 'effects__preview--brightness',
-    filter: 'brightness',
-    min: 1,
-    max: 3,
-  }
-};
-
-var sliderShowOrHidden = function (elem) {
-  return elem.value !== 'none' ? effectLevel.classList.remove('hidden') : effectLevel.classList.add('hidden');
-};
-
 for (var i = 0; i < effectRadios.length; i++) {
   effectRadios[i].addEventListener('change', function (evt) {
-    var toggler = evt.target.closest('input');
+    var toggle = evt.target;
     imgUploadPreview.classList = 'img-upload__preview';
     imgUploadPreview.removeAttribute('style');
-    imgUploadPreview.classList.add(effecstList[toggler.value].class);
+    imgUploadPreview.classList.add(effecstList[toggle.value].class);
 
-    var unit = effecstList[toggler.value].unit || '';
-    imgUploadPreview.style.filter = effecstList[toggler.value].filter + '(' + effecstList[toggler.value].max + unit + ')';
-    sliderShowOrHidden(toggler);
+    var unit = effecstList[toggle.value].unit || '';
+    imgUploadPreview.style.filter = effecstList[toggle.value].filter + '(' + effecstList[toggle.value].max + unit + ')';
+    sliderShowOrHidden(toggle);
   });
 }
-
-var applyEffect = function (max, min, percent, effect, unit) {
-  effectLevelValue = percent * (max - min) + min;
-
-  var unitEffect = unit || '';
-  var effectPicture = effect + '(' + effectLevelValue + unitEffect + ')';
-  imgUploadPreview.style.filter = effectPicture;
-};
 
 effectLevelLine.addEventListener('mouseup', function (evt) {
   evt.preventDefault();
