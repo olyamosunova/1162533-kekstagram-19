@@ -40,7 +40,6 @@ var imgUploadPreview = imgUploadOverlay.querySelector('.img-upload__preview');
 var image = imgUploadPreview.querySelector('img');
 
 var inputHashtags = imgUploadOverlay.querySelector('.text__hashtags');
-var submitButton = imgUploadOverlay.querySelector('.img-upload__submit');
 var currentEffect;
 
 
@@ -276,7 +275,7 @@ var validateHashtagsList = function (hashtags) {
   return '';
 };
 
-submitButton.addEventListener('click', function () {
+inputHashtags.addEventListener('input', function () {
   var hashtagsList = inputHashtags.value.replace(/\s+/g, ' ').toLowerCase().split(' ');
   inputHashtags.setCustomValidity(validateHashtagsList(hashtagsList));
 });
