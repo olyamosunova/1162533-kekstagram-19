@@ -47,7 +47,6 @@ var currentEffect;
 var effecstList = {
   chrome: {
     className: 'effects__preview--chrome',
-    filter: 'grayscale',
     min: 0,
     max: 1,
     unit: '',
@@ -57,7 +56,6 @@ var effecstList = {
   },
   sepia: {
     className: 'effects__preview--sepia',
-    filter: 'sepia',
     min: 0,
     max: 1,
     unit: '',
@@ -67,7 +65,6 @@ var effecstList = {
   },
   marvin: {
     className: 'effects__preview--marvin',
-    filter: 'invert',
     min: 0,
     max: 100,
     unit: '%',
@@ -77,7 +74,6 @@ var effecstList = {
   },
   phobos: {
     className: 'effects__preview--phobos',
-    filter: 'blur',
     min: 0,
     max: 3,
     unit: 'px',
@@ -87,7 +83,6 @@ var effecstList = {
   },
   heat: {
     className: 'effects__preview--heat',
-    filter: 'brightness',
     min: 1,
     max: 3,
     unit: '',
@@ -184,12 +179,16 @@ var showBigPicture = function () {
   BODY.classList.add('modal-open');
 };
 
-var sliderShowOrHidden = function (elem) {
-  return elem.value !== 'none' ? effectLevel.classList.remove('hidden') : effectLevel.classList.add('hidden');
+var showSlider = function () {
+  effectLevel.classList.remove('hidden');
 };
 
-var applyEffect = function (effect, level) {
-  image.style.filter = effect.getIntensity(level);
+var hiddenSlider = function () {
+  effectLevel.classList.add('hidden');
+};
+
+var applyEffect = function (level) {
+  image.style.filter = currentEffect.getIntensity(level);
 };
 
 bigPictureClose.addEventListener('click', function () {
@@ -203,7 +202,7 @@ uploadFile.addEventListener('change', function () {
 
   image.classList = 'img-upload__preview';
   image.removeAttribute('style');
-  effectLevel.classList.add('hidden');
+  hiddenSlider();
 });
 
 imgUploadClose.addEventListener('click', function () {
@@ -230,9 +229,11 @@ for (var i = 0; i < effectRadios.length; i++) {
 
     if (currentEffect) {
       image.classList.add(currentEffect.className);
+      showSlider();
+    } else {
+      hiddenSlider();
     }
     image.removeAttribute('style');
-    sliderShowOrHidden(evt.target);
   });
 }
 
@@ -247,63 +248,37 @@ effectLevelLine.addEventListener('mouseup', function (evt) {
 
   var percent = (coordsClick.x / levelLine.width).toFixed(2);
   effectLevelValue = percent * (currentEffect.max - currentEffect.min) + currentEffect.min + currentEffect.unit;
-  applyEffect(currentEffect, effectLevelValue);
+  applyEffect(effectLevelValue);
 });
 
-var isHashtagDoubled = function (hashtags) {
-  var uniquHashtags = [];
-  for (var tag = 0; tag < hashtags.length; tag++) {
-    if (uniquHashtags.includes(hashtags[tag])) {
-      return true;
-    }
-    uniquHashtags.push(hashtags[tag]);
-  }
-  return false;
-};
-
-var validateHashtag = function (hashtag, hashtags) {
-  var hashtagValue = hashtag.substr(1, hashtag.length - 1);
-  if (hashtag.charAt(0) !== '#') {
-    inputHashtags.setCustomValidity('Хэштег должен начинаться со знака решетки');
-    return false;
-  } else if (!(/^[а-яА-ЯёЁa-zA-Z0-9#]+$/.test(hashtagValue))) {
-    inputHashtags.setCustomValidity('Cтрока после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т.п.), символы пунктуации (тире, дефис, запятая и т.п.), эмодзи и т.д');
-    return false;
-  } else if (hashtag.length < 2) {
-    inputHashtags.setCustomValidity('Хэштег не может состоять только из решетки');
-    return false;
-  } else if (hashtag.length > 20) {
-    inputHashtags.setCustomValidity('Максимальная длина одного хэш-тега 20 символов');
-    return false;
-  } else if (hashtag.indexOf('#', 1) > 0) {
-    inputHashtags.setCustomValidity('Хэш-теги разделяются пробелами');
-    return false;
-  } else if (isHashtagDoubled(hashtags)) {
-    inputHashtags.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
-    return false;
-  }
-  return true;
-};
-
 var validateHashtagsList = function (hashtags) {
+  var uniquHashtags = [];
   if (hashtags.length > 5) {
-    inputHashtags.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
+    return 'Нельзя указать больше пяти хэш-тегов';
   }
+  for (var a = 0; a < hashtags.length; a++) {
+    var hashtagValue = hashtags[a].substr(1, hashtags[a].length - 1);
+    if (hashtags[a].charAt(0) !== '#') {
+      return 'Хэштег должен начинаться со знака решетки';
+    } else if (hashtags[a].length < 2) {
+      return 'Хэштег не может состоять только из решетки';
+    } else if (!(/^[а-яА-ЯёЁa-zA-Z0-9#]+$/.test(hashtagValue))) {
+      return 'Cтрока после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т.п.), символы пунктуации (тире, дефис, запятая и т.п.), эмодзи и т.д';
+    } else if (hashtags[a].length > 20) {
+      return 'Максимальная длина одного хэш-тега 20 символов';
+    } else if (hashtags[a].indexOf('#', 1) > 0) {
+      return 'Хэш-теги разделяются пробелами';
+    } else if (uniquHashtags.includes(hashtags[a])) {
+      return 'Один и тот же хэш-тег не может быть использован дважды';
+    }
+    uniquHashtags.push(hashtags[a]);
+  }
+  return '';
 };
 
 submitButton.addEventListener('click', function () {
   var hashtagsList = inputHashtags.value.replace(/\s+/g, ' ').toLowerCase().split(' ');
-  for (var a = 0; a < hashtagsList.length; a++) {
-    var isHashtagValid = validateHashtag(hashtagsList[a], hashtagsList);
-    if (!isHashtagValid) {
-      break;
-    }
-  }
-  validateHashtagsList(hashtagsList);
-});
-
-inputHashtags.addEventListener('input', function () {
-  inputHashtags.setCustomValidity('');
+  inputHashtags.setCustomValidity(validateHashtagsList(hashtagsList));
 });
 
 var publications = createPublications();
