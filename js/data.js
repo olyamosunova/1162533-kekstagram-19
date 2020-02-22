@@ -19,12 +19,12 @@ window.data = (function () {
 
       var generateComments = function () {
         var comments = [];
-        var countComments = window.random.getRandomInteger(COMMENTS_MIN, COMMENTS_MAX);
+        var countComments = window.utils.getRandomInteger(COMMENTS_MIN, COMMENTS_MAX);
         for (var j = 0; j < countComments; j++) {
           var comment = {
-            avatar: 'img/avatar-' + window.random.getRandomInteger(AVATAR_MIN, AVATAR_MAX) + '.svg',
-            message: window.random.getRandomItem(messages),
-            name: window.random.getRandomItem(names)
+            avatar: 'img/avatar-' + window.utils.getRandomInteger(AVATAR_MIN, AVATAR_MAX) + '.svg',
+            message: window.utils.getRandomItem(messages),
+            name: window.utils.getRandomItem(names)
           };
           comments.push(comment);
         }
@@ -33,8 +33,8 @@ window.data = (function () {
 
       var publication = {
         url: 'photos/' + i + '.jpg',
-        description: window.random.getRandomItem(descriptions),
-        likes: window.random.getRandomInteger(LIKES_MIN, LIKES_MAX),
+        description: window.utils.getRandomItem(descriptions),
+        likes: window.utils.getRandomInteger(LIKES_MIN, LIKES_MAX),
         comments: generateComments()
       };
       publications.push(publication);
