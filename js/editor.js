@@ -11,8 +11,8 @@ var inputHashtagsElement = document.querySelector('.text__hashtags');
 uploadFileElement.addEventListener('change', function () {
   imgUploadOverlayElement.classList.remove('hidden');
   BODY.classList.add('modal-open');
-  window.effect();
-  window.scale();
+  window.effect.applyDefaultEffect();
+  window.scale.applyDefaultScale();
 });
 
 imgUploadCloseElement.addEventListener('click', function () {
