@@ -13,6 +13,8 @@ var socialCaptionElement = bigPictureElement.querySelector('.social__caption');
 var socialComentCountElement = bigPictureElement.querySelector('.social__comment-count');
 var commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
 
+var smallPictureElements = document.querySelectorAll('.picture');
+
 var publications = window.data.publications;
 
 var removeComments = function () {
@@ -22,12 +24,12 @@ var removeComments = function () {
   }
 };
 
-var showComments = function () {
+var showComments = function (i) {
   var fragment = document.createDocumentFragment();
-  for (var a = 0; a < publications[0].comments.length; a++) {
+  for (var a = 0; a < publications[i].comments.length; a++) {
     var newSocialCommentElement = document.createElement('li');
     newSocialCommentElement.className = 'social__comment';
-    newSocialCommentElement.innerHTML = '<img class="social__picture" src=' + publications[0].comments[a].avatar + ' "alt="' + publications[0].comments[a].name + '"width="35" height="35"><p class="social__text">' + publications[0].comments[a].message + '</p>';
+    newSocialCommentElement.innerHTML = '<img class="social__picture" src=' + publications[i].comments[a].avatar + ' "alt="' + publications[i].comments[a].name + '"width="35" height="35"><p class="social__text">' + publications[i].comments[a].message + '</p>';
     fragment.appendChild(newSocialCommentElement);
   }
   removeComments();
@@ -40,16 +42,28 @@ bigPictureCloseElement.addEventListener('click', function () {
   BODY_ELEMENT.classList.remove('modal-open');
 });
 
-(function () {
+var showPreview = function (i) {
   bigPictureElement.classList.remove('hidden');
-  bigPictureImgElement.src = publications[0].url;
-  likesCountElement.textContent = publications[0].likes;
-  commentsCountElement.textContent = publications[0].comments.length;
-  socialCaptionElement.textContent = publications[0].description;
+  bigPictureImgElement.src = publications[i].url;
+  likesCountElement.textContent = publications[i].likes;
+  commentsCountElement.textContent = publications[i].comments.length;
+  socialCaptionElement.textContent = publications[i].description;
 
-  showComments();
+  showComments(i);
 
   socialComentCountElement.classList.add('hidden');
   commentsLoaderElement.classList.add('hidden');
   BODY_ELEMENT.classList.add('modal-open');
-})();
+};
+
+var addClickListener = function (element, i) {
+  element.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    showPreview(i);
+  });
+};
+
+for (var c = 0; c < smallPictureElements.length; c++) {
+  var pictureElement = smallPictureElements[c];
+  addClickListener(pictureElement, c);
+}
