@@ -1,6 +1,6 @@
 'use strict';
 
-var BODY_ELEMENT = document.querySelector('body');
+var bodyElement = document.querySelector('body');
 
 var bigPictureElement = document.querySelector('.big-picture');
 var bigPictureImgBlockElement = bigPictureElement.querySelector('.big-picture__img');
@@ -39,7 +39,7 @@ var showComments = function (i) {
 
 bigPictureCloseElement.addEventListener('click', function () {
   bigPictureElement.classList.add('hidden');
-  BODY_ELEMENT.classList.remove('modal-open');
+  bodyElement.classList.remove('modal-open');
 });
 
 var showPreview = function (i) {
@@ -53,7 +53,7 @@ var showPreview = function (i) {
 
   socialComentCountElement.classList.add('hidden');
   commentsLoaderElement.classList.add('hidden');
-  BODY_ELEMENT.classList.add('modal-open');
+  bodyElement.classList.add('modal-open');
 };
 
 var addClickListener = function (element, i) {

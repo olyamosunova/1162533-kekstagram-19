@@ -137,7 +137,7 @@ effectLevelPinElement.addEventListener('mousedown', function (evt) {
   document.addEventListener('mouseup', onMouseUp);
 });
 
-var applyDefaultEffect = function () {
+var applyDefaultFilter = function () {
 
   if (currentEffect) {
     imageElement.classList.remove(currentEffect.className);
@@ -149,5 +149,5 @@ var applyDefaultEffect = function () {
 };
 
 window.effect = {
-  applyDefaultEffect: applyDefaultEffect
+  applyDefaultFilter: applyDefaultFilter
 };
