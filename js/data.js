@@ -1,6 +1,6 @@
 'use strict';
 
-window.data = (function () {
+/*window.data = (function () {
   var COUNT_PICTURES = 25;
   var LIKES_MIN = 15;
   var LIKES_MAX = 200;
@@ -45,4 +45,4 @@ window.data = (function () {
   return {
     publications: createPublications()
   };
-})();
+})();*/

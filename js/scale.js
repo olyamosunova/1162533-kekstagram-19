@@ -29,11 +29,11 @@ scaleSmallerElement.addEventListener('click', function () {
   imageElement.style.transform = 'scale(' + currentScale / 100 + ')';
 });
 
-var applyDefaultSize = function () {
+var reset = function () {
   scaleValueElement.value = '100%';
   imageElement.style.transform = 'scale(1)';
 };
 
 window.scale = {
-  applyDefaultSize: applyDefaultSize
+  reset: reset
 };

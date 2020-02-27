@@ -5,14 +5,15 @@ var bodyElement = document.querySelector('body');
 var uploadFileElement = document.querySelector('#upload-file');
 var imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
 var imgUploadCloseElement = imgUploadOverlayElement.querySelector('.img-upload__cancel');
+var imgUploadFormElement = document.querySelector('.img-upload__form');
 
 var inputHashtagsElement = document.querySelector('.text__hashtags');
 
 uploadFileElement.addEventListener('change', function () {
   imgUploadOverlayElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
-  window.effect.applyDefaultFilter();
-  window.scale.applyDefaultSize();
+  window.effect.reset();
+  window.scale.reset();
 });
 
 imgUploadCloseElement.addEventListener('click', function () {
@@ -31,4 +32,12 @@ document.addEventListener('keydown', function (evt) {
 
 inputHashtagsElement.addEventListener('keydown', function (evt) {
   evt.stopPropagation();
+});
+
+imgUploadFormElement.addEventListener('submit', function (evt) {
+  window.upload(new FormData(imgUploadFormElement), function (response) {
+    imgUploadOverlayElement.classList.add('hidden');
+  });
+
+  evt.preventDefault();
 });
