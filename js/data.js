@@ -1,6 +1,6 @@
 'use strict';
 
-/*window.data = (function () {
+/* window.data = (function () {
   var COUNT_PICTURES = 25;
   var LIKES_MIN = 15;
   var LIKES_MAX = 200;
@@ -45,14 +45,14 @@
   return {
     publications: createPublications()
   };
-})();*/
+})(); */
 
-var URL = 'https://js.dump.academy/kekstagram/data';
-window.data = function  () {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", URL, false);
-    xhr.send();
+window.data = function () {
+  var URL = 'https://js.dump.academy/kekstagram/data';
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', URL, false);
+  xhr.send();
 
-    var data = JSON.parse(xhr.responseText);
-    return data;
+  var data = JSON.parse(xhr.responseText);
+  return data;
 };

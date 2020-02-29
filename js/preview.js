@@ -14,11 +14,8 @@ var socialComentCountElement = bigPictureElement.querySelector('.social__comment
 var commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
 
 var smallPictureElements = document.querySelectorAll('.picture');
-//console.log(smallPictureElements);
 
-//var publications = window.data.publications;
 var publications = window.data();
-console.log(publications);
 
 var removeComments = function () {
   var socialCommentsListElements = socialCommentsElement.querySelectorAll('.social__comment');

@@ -5,7 +5,7 @@ var bodyElement = document.querySelector('body');
 var uploadFileElement = document.querySelector('#upload-file');
 var imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
 var imgUploadCloseElement = imgUploadOverlayElement.querySelector('.img-upload__cancel');
-var imgUploadFormElement = document.querySelector('.img-upload__form');
+// var imgUploadFormElement = document.querySelector('.img-upload__form');
 
 var inputHashtagsElement = document.querySelector('.text__hashtags');
 
@@ -34,10 +34,10 @@ inputHashtagsElement.addEventListener('keydown', function (evt) {
   evt.stopPropagation();
 });
 
-imgUploadFormElement.addEventListener('submit', function (evt) {
+/* imgUploadFormElement.addEventListener('submit', function (evt) {
   window.upload(new FormData(imgUploadFormElement), function (response) {
     imgUploadOverlayElement.classList.add('hidden');
   });
 
   evt.preventDefault();
-});
+}); */
