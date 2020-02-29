@@ -12,13 +12,10 @@ var createPictureElement = function (user) {
   return pictureElement;
 };
 
-var succesHandler = function (images) {
+(function () {
   var fragment = document.createDocumentFragment();
-
-  for (var i = 0; i < images.length; i++) {
-    fragment.appendChild(createPictureElement(images[i]));
+  for (var i = 0; i < window.data().length; i++) {
+    fragment.appendChild(createPictureElement(window.data()[i]));
   }
   pictures.appendChild(fragment);
-};
-
-window.load(succesHandler);
+})();

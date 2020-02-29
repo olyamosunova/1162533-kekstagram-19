@@ -46,3 +46,13 @@
     publications: createPublications()
   };
 })();*/
+
+var URL = 'https://js.dump.academy/kekstagram/data';
+window.data = function  () {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", URL, false);
+    xhr.send();
+
+    var data = JSON.parse(xhr.responseText);
+    return data;
+};
