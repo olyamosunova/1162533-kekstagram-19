@@ -31,3 +31,11 @@ inputHashtagsElement.addEventListener('input', function () {
   var hashtagsList = inputHashtagsElement.value.replace(/\s+/g, ' ').toLowerCase().split(' ');
   inputHashtagsElement.setCustomValidity(validateHashtagsList(hashtagsList));
 });
+
+var reset = function () {
+  inputHashtagsElement.value = '';
+};
+
+window.hashtags = {
+  reset: reset
+};

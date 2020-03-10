@@ -1,7 +1,8 @@
 'use strict';
 
 (function () {
-  var URL = 'https://js.dump.academy/kekstagram/data';
+  var URL_DOWNLOAD = 'https://js.dump.academy/kekstagram/data';
+  var URL_SEND = 'https://js.dump.academy/kekstagram';
   var HTTP_SUCCESS_CODE = 200;
   var TIMEOUT_IM_MS = 10000;
 
@@ -21,14 +22,28 @@
 
   var download = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
-    registerCallbacks(xhr, onSuccess, onError);
     xhr.responseType = 'json';
+
+    registerCallbacks(xhr, onSuccess, onError);
+
     xhr.timeout = TIMEOUT_IM_MS;
-    xhr.open('GET', URL);
+    xhr.open('GET', URL_DOWNLOAD);
     xhr.send();
   };
 
+  var send = function (data, onSuccess, onError) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+
+    registerCallbacks(xhr, onSuccess, onError);
+
+    xhr.timeout = TIMEOUT_IM_MS;
+    xhr.open('POST', URL_SEND);
+    xhr.send(data);
+  };
+
   window.backend = {
-    download: download
+    download: download,
+    send: send
   };
 })();
