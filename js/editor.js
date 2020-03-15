@@ -8,13 +8,14 @@ var imgUploadCloseElement = imgUploadOverlayElement.querySelector('.img-upload__
 var imgUploadFormElement = document.querySelector('.img-upload__form');
 
 var inputHashtagsElement = document.querySelector('.text__hashtags');
+var textareaCommentElement = document.querySelector('.text__description');
 
 var openUploadOverlay = function () {
   imgUploadOverlayElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   window.effect.reset();
   window.scale.reset();
-  window.hashtags.reset();
+  window.validation.reset();
 };
 
 var closeUploadOverlay = function () {
@@ -38,6 +39,10 @@ document.addEventListener('keydown', function (evt) {
 });
 
 inputHashtagsElement.addEventListener('keydown', function (evt) {
+  evt.stopPropagation();
+});
+
+textareaCommentElement.addEventListener('keydown', function (evt) {
   evt.stopPropagation();
 });
 

@@ -2,8 +2,18 @@
 
 var HASHTAGS_LENGTH_MAX = 5;
 var HASHTAG_LENGTH_MAX = 20;
+var COMMENT_LENGTH_MAX = 140;
 
 var inputHashtagsElement = document.querySelector('.text__hashtags');
+var textareaCommentElement = document.querySelector('.text__description');
+
+var addInvalidMarker = function (field) {
+  field.style.borderColor = 'red';
+};
+
+var removeInvalidMarker = function (field) {
+  field.style.borderColor = 'inherit';
+};
 
 var validateHashtagsList = function () {
   var hashtags = inputHashtagsElement.value.replace(/\s+/g, ' ').toLowerCase().split(' ');
@@ -44,8 +54,10 @@ var validateHashtagsList = function () {
   });
 
   if (errorMessage) {
+    addInvalidMarker(inputHashtagsElement);
     return errorMessage;
   } else {
+    removeInvalidMarker(inputHashtagsElement);
     return successMessage;
   }
 };
@@ -54,10 +66,21 @@ inputHashtagsElement.addEventListener('input', function () {
   inputHashtagsElement.setCustomValidity(validateHashtagsList());
 });
 
+textareaCommentElement.addEventListener('input', function () {
+  if (textareaCommentElement.value.length > COMMENT_LENGTH_MAX) {
+    addInvalidMarker(textareaCommentElement);
+    textareaCommentElement.setCustomValidity('Длина комментария не может составлять больше 140 символов');
+  } else {
+    removeInvalidMarker(textareaCommentElement);
+    textareaCommentElement.setCustomValidity('');
+  }
+});
+
 var reset = function () {
   inputHashtagsElement.value = '';
+  textareaCommentElement.value = '';
 };
 
-window.hashtags = {
+window.validation = {
   reset: reset
 };
