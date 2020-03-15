@@ -1,6 +1,7 @@
 'use strict';
 
 var effectRadiosElements = document.querySelectorAll('.effects__radio');
+var effectDefaultElement = document.querySelector('#effect-none');
 var effectLevelElement = document.querySelector('.effect-level');
 var effectLevelValueElement = effectLevelElement.querySelector('.effect-level__value').value;
 var effectLevelPinElement = effectLevelElement.querySelector('.effect-level__pin');
@@ -146,6 +147,7 @@ var reset = function () {
   imageElement.style.filter = '';
   effectLevelPinElement.style.left = pinCoordsX.MAX + 'px';
   effectLevelDepthElement.style.width = pinCoordsX.MAX + 'px';
+  effectDefaultElement.checked = true;
   hideSlider();
 };
 

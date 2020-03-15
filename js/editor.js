@@ -6,6 +6,8 @@ var uploadFileElement = document.querySelector('#upload-file');
 var imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
 var imgUploadCloseElement = imgUploadOverlayElement.querySelector('.img-upload__cancel');
 var imgUploadFormElement = document.querySelector('.img-upload__form');
+var imgUploadPreviewElement = document.querySelector('.img-upload__preview');
+var imageElement = imgUploadPreviewElement.querySelector('img');
 
 var inputHashtagsElement = document.querySelector('.text__hashtags');
 var textareaCommentElement = document.querySelector('.text__description');
@@ -19,14 +21,22 @@ var openUploadOverlay = function () {
 };
 
 var closeUploadOverlay = function () {
-  imgUploadOverlayElement.classList.add('hidden');
   uploadFileElement.value = '';
+  imgUploadOverlayElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
 };
 
-uploadFileElement.addEventListener('change', function () {
+var uploadFileInputHandler = function () {
+  var uploadFile = uploadFileElement.files[0];
+  var reader = new FileReader();
+  reader.onload = function (evt) {
+    imageElement.src = evt.target.result;
+  };
+  reader.readAsDataURL(uploadFile);
   openUploadOverlay();
-});
+};
+
+uploadFileElement.addEventListener('change', uploadFileInputHandler);
 
 imgUploadCloseElement.addEventListener('click', function () {
   closeUploadOverlay();
