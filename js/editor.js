@@ -44,7 +44,7 @@ inputHashtagsElement.addEventListener('keydown', function (evt) {
 var mainContainerElement = document.querySelector('main');
 
 var onSuccess = function () {
-  imgUploadOverlayElement.classList.add('hidden');
+  closeUploadOverlay();
 
   var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
   var successMessage = successMessageTemplate.cloneNode(true);
@@ -72,7 +72,7 @@ var onSuccess = function () {
 };
 
 var onError = function () {
-  imgUploadOverlayElement.classList.add('hidden');
+  closeUploadOverlay();
 
   var errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
   var errorMessage = errorMessageTemplate.cloneNode(true);

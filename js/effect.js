@@ -142,6 +142,7 @@ var reset = function () {
   if (currentEffect) {
     imageElement.classList.remove(currentEffect.className);
   }
+
   imageElement.style.filter = '';
   effectLevelPinElement.style.left = pinCoordsX.MAX + 'px';
   effectLevelDepthElement.style.width = pinCoordsX.MAX + 'px';
