@@ -23,12 +23,14 @@
 
   var showComments = function (picture) {
     var fragment = document.createDocumentFragment();
-    for (var a = 0; a < picture.comments.length; a++) {
+
+    picture.comments.forEach(function (item) {
       var newSocialCommentElement = document.createElement('li');
       newSocialCommentElement.className = 'social__comment';
-      newSocialCommentElement.innerHTML = '<img class="social__picture" src=' + picture.comments[a].avatar + ' "alt="' + picture.comments[a].name + '"width="35" height="35"><p class="social__text">' + picture.comments[a].message + '</p>';
+      newSocialCommentElement.innerHTML = '<img class="social__picture" src=' + item.avatar + ' "alt="' + item.name + '"width="35" height="35"><p class="social__text">' + item.message + '</p>';
       fragment.appendChild(newSocialCommentElement);
-    }
+    });
+
     removeComments();
     socialCommentsElement.appendChild(fragment);
   };

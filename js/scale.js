@@ -3,35 +3,50 @@
 var STEP = 25;
 var MAX_SCALE = 100;
 var MIN_SCALE = 25;
+var DEFAULT_SCALE = 100;
 
 var scaleBiggerElement = document.querySelector('.scale__control--bigger');
 var scaleSmallerElement = document.querySelector('.scale__control--smaller');
 var scaleValueElement = document.querySelector('.scale__control--value');
 var imgPreviewElement = document.querySelector('.img-upload__preview');
-var imageElement = imgPreviewElement.querySelector('img');
-var currentScale;
+
+var getNumericScaleValue = function () {
+  return parseInt(scaleValueElement.value, 10);
+};
+
+var setNumericScaleValue = function (value) {
+  scaleValueElement.value = value + '%';
+};
+
+var scaleImage = function (value) {
+  imgPreviewElement.style.transform = 'scale(' + value / 100 + ')';
+};
+
+var applyChanges = function (value) {
+  setNumericScaleValue(value);
+  scaleImage(value);
+};
 
 scaleBiggerElement.addEventListener('click', function () {
-  currentScale = Number(scaleValueElement.value.substr(0, scaleValueElement.value.length - 1));
-  if (currentScale + STEP <= MAX_SCALE) {
-    currentScale += STEP;
-    scaleValueElement.value = currentScale + '%';
+  var value = getNumericScaleValue();
+  if (value + STEP <= MAX_SCALE) {
+    value += STEP;
+    applyChanges(value);
+
   }
-  imageElement.style.transform = 'scale(' + currentScale / 100 + ')';
 });
 
 scaleSmallerElement.addEventListener('click', function () {
-  currentScale = Number(scaleValueElement.value.substr(0, scaleValueElement.value.length - 1));
-  if (currentScale - STEP >= MIN_SCALE) {
-    currentScale -= STEP;
-    scaleValueElement.value = currentScale + '%';
+  var value = getNumericScaleValue();
+  if (value - STEP >= MIN_SCALE) {
+    value -= STEP;
+    applyChanges(value);
   }
-  imageElement.style.transform = 'scale(' + currentScale / 100 + ')';
 });
 
 var reset = function () {
-  scaleValueElement.value = '100%';
-  imageElement.style.transform = 'scale(1)';
+  setNumericScaleValue(DEFAULT_SCALE);
+  scaleImage(DEFAULT_SCALE);
 };
 
 window.scale = {

@@ -17,15 +17,14 @@
 
   var renderPictures = function (data) {
     var pictures = data;
-
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < pictures.length; i++) {
-      var pictureElement = createPictureElement(pictures[i]);
 
-      window.preview.register(pictureElement, pictures[i]);
-
+    pictures.forEach(function (item) {
+      var pictureElement = createPictureElement(item);
+      window.preview.register(pictureElement, item);
       fragment.appendChild(pictureElement);
-    }
+    });
+
     picturesContainerElement.appendChild(fragment);
   };
 

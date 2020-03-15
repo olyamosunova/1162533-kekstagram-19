@@ -9,25 +9,31 @@ var imgUploadFormElement = document.querySelector('.img-upload__form');
 
 var inputHashtagsElement = document.querySelector('.text__hashtags');
 
-uploadFileElement.addEventListener('change', function () {
+var openUploadOverlay = function () {
   imgUploadOverlayElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   window.effect.reset();
   window.scale.reset();
   window.hashtags.reset();
-});
+};
 
-imgUploadCloseElement.addEventListener('click', function () {
+var closeUploadOverlay = function () {
   imgUploadOverlayElement.classList.add('hidden');
   uploadFileElement.value = '';
   bodyElement.classList.remove('modal-open');
+};
+
+uploadFileElement.addEventListener('change', function () {
+  openUploadOverlay();
+});
+
+imgUploadCloseElement.addEventListener('click', function () {
+  closeUploadOverlay();
 });
 
 document.addEventListener('keydown', function (evt) {
   if (evt.keyCode === window.utils.ESC_KEYCODE) {
-    imgUploadOverlayElement.classList.add('hidden');
-    uploadFileElement.value = '';
-    bodyElement.classList.remove('modal-open');
+    closeUploadOverlay();
   }
 });
 
@@ -38,6 +44,8 @@ inputHashtagsElement.addEventListener('keydown', function (evt) {
 var mainContainerElement = document.querySelector('main');
 
 var onSuccess = function () {
+  imgUploadOverlayElement.classList.add('hidden');
+
   var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
   var successMessage = successMessageTemplate.cloneNode(true);
   var fragment = document.createDocumentFragment();
@@ -64,6 +72,8 @@ var onSuccess = function () {
 };
 
 var onError = function () {
+  imgUploadOverlayElement.classList.add('hidden');
+
   var errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
   var errorMessage = errorMessageTemplate.cloneNode(true);
   var fragment = document.createDocumentFragment();
@@ -90,9 +100,6 @@ var onError = function () {
 };
 
 imgUploadFormElement.addEventListener('submit', function (evt) {
-  window.backend.send(new FormData(imgUploadFormElement), function (response) {
-    imgUploadOverlayElement.classList.add('hidden');
-    onSuccess();
-  });
   evt.preventDefault();
+  window.backend.send(new FormData(imgUploadFormElement), onSuccess, onError);
 });

@@ -33,7 +33,6 @@
 
   var send = function (data, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
 
     registerCallbacks(xhr, onSuccess, onError);
 
