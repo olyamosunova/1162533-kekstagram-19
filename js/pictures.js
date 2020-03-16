@@ -34,7 +34,9 @@
     imgFilterElement.classList.remove('img-filters--inactive');
   };
 
-  var onDownloadError = function (errorMessage) {};
+  var onDownloadError = function (errorMessage) {
+    window.notification.showErrorPopup(errorMessage, 'УПС');
+  };
 
   window.pictures = {
     publications: [],

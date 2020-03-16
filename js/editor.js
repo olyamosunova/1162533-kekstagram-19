@@ -56,62 +56,14 @@ textareaCommentElement.addEventListener('keydown', function (evt) {
   evt.stopPropagation();
 });
 
-var mainContainerElement = document.querySelector('main');
-
 var onSuccess = function () {
   closeUploadOverlay();
-
-  var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-  var successMessage = successMessageTemplate.cloneNode(true);
-  var fragment = document.createDocumentFragment();
-  fragment.appendChild(successMessage);
-  mainContainerElement.appendChild(fragment);
-
-  var successButtonElement = document.querySelector('.success__button');
-
-  successButtonElement.addEventListener('click', function () {
-    mainContainerElement.removeChild(successMessage);
-  });
-
-  window.onclick = function (evt) {
-    if (evt.target === successMessage) {
-      mainContainerElement.removeChild(successMessage);
-    }
-  };
-
-  window.addEventListener('keydown', function (keyEvt) {
-    if (keyEvt.keyCode === window.utils.ESC_KEYCODE) {
-      mainContainerElement.removeChild(successMessage);
-    }
-  });
+  window.notification.showSuccessPopup();
 };
 
-var onError = function () {
+var onError = function (wrongMessage) {
   closeUploadOverlay();
-
-  var errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
-  var errorMessage = errorMessageTemplate.cloneNode(true);
-  var fragment = document.createDocumentFragment();
-  fragment.appendChild(errorMessage);
-  mainContainerElement.appendChild(fragment);
-
-  var errorButtonElement = document.querySelector('.error__button');
-
-  errorButtonElement.addEventListener('click', function () {
-    mainContainerElement.removeChild(errorMessage);
-  });
-
-  window.onclick = function (evt) {
-    if (evt.target === errorMessage) {
-      mainContainerElement.removeChild(errorMessage);
-    }
-  };
-
-  window.addEventListener('keydown', function (keyEvt) {
-    if (keyEvt.keyCode === window.utils.ESC_KEYCODE) {
-      mainContainerElement.removeChild(errorMessage);
-    }
-  });
+  window.notification.showErrorPopup(wrongMessage, 'УПС');
 };
 
 imgUploadFormElement.addEventListener('submit', function (evt) {

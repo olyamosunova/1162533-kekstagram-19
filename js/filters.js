@@ -55,21 +55,21 @@
   var showDefaultPicture = function (evt) {
     removePictures();
     removeActiveFilter();
-    window.debounce(window.pictures.renderPictures(getDefaultPicture(window.pictures.publications)));
+    window.utils.debounce(window.pictures.renderPictures(getDefaultPicture(window.pictures.publications)));
     evt.target.classList.add('img-filters__button--active');
   };
 
   var showRandomPicture = function (evt) {
     removePictures();
     removeActiveFilter();
-    window.debounce(window.pictures.renderPictures(getRandomPicture(window.pictures.publications)));
+    window.utils.debounce(window.pictures.renderPictures(getRandomPicture(window.pictures.publications)));
     evt.target.classList.add('img-filters__button--active');
   };
 
   var showDiscussedPicture = function (evt) {
     removePictures();
     removeActiveFilter();
-    window.debounce(window.pictures.renderPictures(getDiscussedPicture(window.pictures.publications)));
+    window.utils.debounce(window.pictures.renderPictures(getDiscussedPicture(window.pictures.publications)));
     evt.target.classList.add('img-filters__button--active');
   };
 
