@@ -5,9 +5,9 @@
 
   var imgFilterElement = document.querySelector('.img-filters');
   var imgFilterButtonElements = imgFilterElement.querySelectorAll('.img-filters__button');
-  var imgFiltersDefaultElement = imgFilterElement.querySelector('#filter-default');
-  var imgFiltersRandomElement = imgFilterElement.querySelector('#filter-random');
-  var imgFiltersDiscussedElement = imgFilterElement.querySelector('#filter-discussed');
+  var imgFilterDefaultElement = imgFilterElement.querySelector('#filter-default');
+  var imgFilterRandomElement = imgFilterElement.querySelector('#filter-random');
+  var imgFilterDiscussedElement = imgFilterElement.querySelector('#filter-discussed');
 
   var removePictures = function () {
     var picturesContainerElement = document.querySelector('.pictures');
@@ -32,11 +32,11 @@
 
   var getRandomPicture = function (data) {
     var randomPictures = [];
-    for (var a = 0; a < COUNT_PICTURES; a++) {
+    for (var i = 0; i < COUNT_PICTURES; i++) {
       var numberIndex = window.utils.getRandomInteger(1, data.length);
 
       if (randomPictures.includes(data[numberIndex - 1])) {
-        a -= 1;
+        i -= 1;
       } else {
         randomPictures.push(data[numberIndex - 1]);
       }
@@ -52,28 +52,28 @@
     return discussedPictures;
   };
 
-  var showDefaultPicture = function (evt) {
+  var onFilterDefaultClick = function (evt) {
     removePictures();
     removeActiveFilter();
-    window.utils.debounce(window.pictures.renderPictures(getDefaultPicture(window.pictures.publications)));
+    window.utils.debounce(window.pictures.renderPublications(getDefaultPicture(window.pictures.publications)));
     evt.target.classList.add('img-filters__button--active');
   };
 
-  var showRandomPicture = function (evt) {
+  var onFilterRandomClick = function (evt) {
     removePictures();
     removeActiveFilter();
-    window.utils.debounce(window.pictures.renderPictures(getRandomPicture(window.pictures.publications)));
+    window.utils.debounce(window.pictures.renderPublications(getRandomPicture(window.pictures.publications)));
     evt.target.classList.add('img-filters__button--active');
   };
 
-  var showDiscussedPicture = function (evt) {
+  var onFilterDiscussedClick = function (evt) {
     removePictures();
     removeActiveFilter();
-    window.utils.debounce(window.pictures.renderPictures(getDiscussedPicture(window.pictures.publications)));
+    window.utils.debounce(window.pictures.renderPublications(getDiscussedPicture(window.pictures.publications)));
     evt.target.classList.add('img-filters__button--active');
   };
 
-  imgFiltersDefaultElement.addEventListener('click', showDefaultPicture);
-  imgFiltersRandomElement.addEventListener('click', showRandomPicture);
-  imgFiltersDiscussedElement.addEventListener('click', showDiscussedPicture);
+  imgFilterDefaultElement.addEventListener('click', onFilterDefaultClick);
+  imgFilterRandomElement.addEventListener('click', onFilterRandomClick);
+  imgFilterDiscussedElement.addEventListener('click', onFilterDiscussedClick);
 })();

@@ -28,7 +28,7 @@
     bodyElement.classList.remove('modal-open');
   };
 
-  var uploadFileInputHandler = function () {
+  var onUploadFileChange = function () {
     var uploadFile = uploadFileElement.files[0];
     var fileName = uploadFile.name.toLowerCase();
 
@@ -41,15 +41,14 @@
       reader.addEventListener('load', function (evt) {
         imageElement.src = evt.target.result;
       });
+      reader.readAsDataURL(uploadFile);
+      openUploadOverlay();
     } else {
       window.notification.showErrorPopup('Допустимые форматы для зарузки: "gif", "jpg", "jpeg", "png"');
     }
-
-    reader.readAsDataURL(uploadFile);
-    openUploadOverlay();
   };
 
-  uploadFileElement.addEventListener('change', uploadFileInputHandler);
+  uploadFileElement.addEventListener('change', onUploadFileChange);
 
   imgUploadCloseElement.addEventListener('click', function () {
     closeUploadOverlay();

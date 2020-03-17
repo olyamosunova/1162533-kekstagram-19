@@ -22,12 +22,12 @@
 
   var removeComments = function () {
     var socialCommentsListElements = socialCommentsElement.querySelectorAll('.social__comment');
-    for (var b = 0; b < socialCommentsListElements.length; b++) {
-      socialCommentsElement.removeChild(socialCommentsListElements[b]);
+    for (var i = 0; i < socialCommentsListElements.length; i++) {
+      socialCommentsElement.removeChild(socialCommentsListElements[i]);
     }
   };
 
-  var showComments = function () {
+  var onCommentsLoaderClick = function () {
     var freeCommentsCount = comments.length - showedCommentsCount;
     var fragment = document.createDocumentFragment();
     var newCommentsPartCount = freeCommentsCount < COMMENTS_PART_COUNT ? freeCommentsCount : COMMENTS_PART_COUNT;
@@ -41,7 +41,7 @@
 
     if (showedCommentsCount === 0) {
       commentsLoaderElement.classList.remove('hidden');
-      commentsLoaderElement.addEventListener('click', showComments);
+      commentsLoaderElement.addEventListener('click', onCommentsLoaderClick);
     }
 
     showedCommentsCount += newCommentsPartCount;
@@ -49,7 +49,7 @@
 
     if (showedCommentsCount === comments.length) {
       commentsLoaderElement.classList.add('hidden');
-      commentsLoaderElement.removeEventListener('click', showComments);
+      commentsLoaderElement.removeEventListener('click', onCommentsLoaderClick);
     }
   };
 
@@ -64,7 +64,7 @@
 
   var closeBigPicture = function () {
     showedCommentsCount = 0;
-    commentsLoaderElement.removeEventListener('click', showComments);
+    commentsLoaderElement.removeEventListener('click', onCommentsLoaderClick);
     bigPictureElement.classList.add('hidden');
     bodyElement.classList.remove('modal-open');
   };
@@ -93,7 +93,7 @@
       commentsLoaderElement.focus();
       comentCountElement.textContent = picture.comments.length;
       comments = picture.comments;
-      showComments();
+      onCommentsLoaderClick();
     }
 
     bodyElement.classList.add('modal-open');

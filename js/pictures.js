@@ -15,7 +15,7 @@
     return pictureElement;
   };
 
-  var renderPictures = function (data) {
+  var renderPublications = function (data) {
     var pictures = data;
     var fragment = document.createDocumentFragment();
 
@@ -30,7 +30,7 @@
 
   var onDownloadSuccess = function (data) {
     window.pictures.publications = data.slice();
-    renderPictures(data);
+    renderPublications(data);
     imgFilterElement.classList.remove('img-filters--inactive');
   };
 
@@ -40,7 +40,7 @@
 
   window.pictures = {
     publications: [],
-    renderPictures: renderPictures,
+    renderPublications: renderPublications,
     onDownloadSuccess: onDownloadSuccess,
     onDownloadError: onDownloadError
   };

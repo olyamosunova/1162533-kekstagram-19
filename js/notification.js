@@ -14,9 +14,9 @@
     messageElement = document.querySelector('.success');
     var successButtonElement = document.querySelector('.success__button');
 
-    document.addEventListener('click', clickAroundMessage);
-    successButtonElement.addEventListener('click', clickButtonMessage);
-    document.addEventListener('keydown', downMessage);
+    document.addEventListener('click', onMessageClick);
+    successButtonElement.addEventListener('click', onSuccessButtonClick);
+    document.addEventListener('keydown', onMessageDown);
   };
 
   var showErrorPopup = function (textMessage, textButton) {
@@ -36,22 +36,22 @@
     messageElement = document.querySelector('.error');
     var errorButtonElement = document.querySelector('.error__button');
 
-    document.addEventListener('click', clickAroundMessage);
-    errorButtonElement.addEventListener('click', clickButtonMessage);
-    document.addEventListener('keydown', downMessage);
+    document.addEventListener('click', onMessageClick);
+    errorButtonElement.addEventListener('click', onSuccessButtonClick);
+    document.addEventListener('keydown', onMessageDown);
   };
 
-  var clickButtonMessage = function () {
+  var onSuccessButtonClick = function () {
     hidePopup();
   };
 
-  var clickAroundMessage = function (evt) {
+  var onMessageClick = function (evt) {
     if (evt.target === messageElement) {
       hidePopup();
     }
   };
 
-  var downMessage = function (evt) {
+  var onMessageDown = function (evt) {
     if (evt.keyCode === window.utils.ESC_KEYCODE) {
       hidePopup();
     }

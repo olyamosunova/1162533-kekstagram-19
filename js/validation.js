@@ -5,6 +5,17 @@
   var HASHTAG_LENGTH_MAX = 20;
   var COMMENT_LENGTH_MAX = 140;
 
+  var Message = {
+    HASHTAGS_MAX_LENGTH: 'Нельзя указать больше пяти хэш-тегов',
+    HASHTAG_START: 'Хэштег должен начинаться со знака решетки',
+    HASHTAG_MIN_LENGTH: 'Хэштег не может состоять только из решетки',
+    HASHTAG_ONLY_TEXT: 'Cтрока после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т.п.), символы пунктуации (тире, дефис, запятая и т.п.), эмодзи и т.д',
+    HASHTAG_MAX_LENGTH: 'Максимальная длина одного хэш-тега 20 символов',
+    HASHTAG_SEPARATION: 'Хэш-теги разделяются пробелами',
+    HASHTAG_UNIQUE: 'Один и тот же хэш-тег не может быть использован дважды',
+    COMMENT_LENGTH: 'Длина комментария не может составлять больше 140 символов'
+  };
+
   var inputHashtagsElement = document.querySelector('.text__hashtags');
   var textareaCommentElement = document.querySelector('.text__description');
 
@@ -20,9 +31,9 @@
     var hashtags = inputHashtagsElement.value.trim().replace(/\s+/g, ' ').toLowerCase().split(' ');
     var errorMessage = '';
     var successMessage = '';
-    var uniquHashtags = [];
+    var uniqueHashtags = [];
     if (hashtags.length > HASHTAGS_LENGTH_MAX) {
-      errorMessage = 'Нельзя указать больше пяти хэш-тегов';
+      errorMessage = Message.HASHTAGS_MAX_LENGTH;
       return errorMessage;
     } else if (hashtags === '') {
       errorMessage = '';
@@ -32,25 +43,25 @@
     hashtags.forEach(function (item) {
       var hashtagValue = item.substr(1, item.length - 1);
       if (item.charAt(0) !== '#') {
-        errorMessage = 'Хэштег должен начинаться со знака решетки';
+        errorMessage = Message.HASHTAG_START;
         return errorMessage;
       } else if (item === '#') {
-        errorMessage = 'Хэштег не может состоять только из решетки';
+        errorMessage = Message.HASHTAG_MIN_LENGTH;
         return errorMessage;
       } else if (!(/^[а-яА-ЯёЁa-zA-Z0-9#]+$/.test(hashtagValue))) {
-        errorMessage = 'Cтрока после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т.п.), символы пунктуации (тире, дефис, запятая и т.п.), эмодзи и т.д';
+        errorMessage = Message.HASHTAG_ONLY_TEXT;
         return errorMessage;
       } else if (item.length > HASHTAG_LENGTH_MAX) {
-        errorMessage = 'Максимальная длина одного хэш-тега 20 символов';
+        errorMessage = Message.HASHTAG_MAX_LENGTH;
         return errorMessage;
       } else if (item.indexOf('#', 1) > 0) {
-        errorMessage = 'Хэш-теги разделяются пробелами';
+        errorMessage = Message.HASHTAG_SEPARATION;
         return errorMessage;
-      } else if (uniquHashtags.includes(item)) {
-        errorMessage = 'Один и тот же хэш-тег не может быть использован дважды';
+      } else if (uniqueHashtags.includes(item)) {
+        errorMessage = Message.HASHTAG_UNIQUE;
         return errorMessage;
       }
-      uniquHashtags.push(item);
+      uniqueHashtags.push(item);
       return errorMessage;
     });
 
@@ -70,7 +81,7 @@
   textareaCommentElement.addEventListener('input', function () {
     if (textareaCommentElement.value.length > COMMENT_LENGTH_MAX) {
       addInvalidMarker(textareaCommentElement);
-      textareaCommentElement.setCustomValidity('Длина комментария не может составлять больше 140 символов');
+      textareaCommentElement.setCustomValidity(Message.COMMENT_LENGTH);
     } else {
       removeInvalidMarker(textareaCommentElement);
       textareaCommentElement.setCustomValidity('');

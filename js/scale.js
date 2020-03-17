@@ -1,10 +1,12 @@
 'use strict';
 
 (function () {
-  var STEP = 25;
-  var MAX_SCALE = 100;
-  var MIN_SCALE = 25;
-  var DEFAULT_SCALE = 100;
+  var ScaleValue = {
+    STEP: 25,
+    MAX_VALUE: 100,
+    MIN_VALUE: 25,
+    DEFAULT_VALUE: 100
+  };
 
   var scaleBiggerElement = document.querySelector('.scale__control--bigger');
   var scaleSmallerElement = document.querySelector('.scale__control--smaller');
@@ -30,8 +32,8 @@
 
   scaleBiggerElement.addEventListener('click', function () {
     var value = getNumericScaleValue();
-    if (value + STEP <= MAX_SCALE) {
-      value += STEP;
+    if (value + ScaleValue.STEP <= ScaleValue.MAX_VALUE) {
+      value += ScaleValue.STEP;
       applyChanges(value);
 
     }
@@ -39,15 +41,15 @@
 
   scaleSmallerElement.addEventListener('click', function () {
     var value = getNumericScaleValue();
-    if (value - STEP >= MIN_SCALE) {
-      value -= STEP;
+    if (value - ScaleValue.STEP >= ScaleValue.MIN_VALUE) {
+      value -= ScaleValue.STEP;
       applyChanges(value);
     }
   });
 
   var reset = function () {
-    setNumericScaleValue(DEFAULT_SCALE);
-    scaleImage(DEFAULT_SCALE);
+    setNumericScaleValue(ScaleValue.DEFAULT_VALUE);
+    scaleImage(ScaleValue.DEFAULT_VALUE);
   };
 
   window.scale = {

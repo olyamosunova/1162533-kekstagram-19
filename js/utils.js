@@ -1,9 +1,12 @@
 'use strict';
 
 (function () {
-  var ESC_KEYCODE = 27;
-  var ENTER_KEYCODE = 13;
   var DEBOUNCE_INTERVAL = 500;
+
+  var KeyCode = {
+    ESC: 27,
+    ENTER: 13
+  };
 
   var lastTimeout = 0;
 
@@ -23,8 +26,8 @@
   };
 
   window.utils = {
-    ESC_KEYCODE: ESC_KEYCODE,
-    ENTER_KEYCODE: ENTER_KEYCODE,
+    ESC_KEYCODE: KeyCode.ESC,
+    ENTER_KEYCODE: KeyCode.ENTER,
     debounce: debounce,
     getRandomInteger: getRandomInteger,
     getRandomItem: getRandomItem
