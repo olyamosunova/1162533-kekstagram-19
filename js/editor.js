@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var bodyElement = document.querySelector('body');
 
   var uploadFileElement = document.querySelector('#upload-file');
@@ -29,10 +30,21 @@
 
   var uploadFileInputHandler = function () {
     var uploadFile = uploadFileElement.files[0];
-    var reader = new FileReader();
-    reader.onload = function (evt) {
-      imageElement.src = evt.target.result;
-    };
+    var fileName = uploadFile.name.toLowerCase();
+
+    var matches = FILE_TYPES.some(function (item) {
+      return fileName.endsWith(item);
+    });
+
+    if (matches) {
+      var reader = new FileReader();
+      reader.addEventListener('load', function (evt) {
+        imageElement.src = evt.target.result;
+      });
+    } else {
+      window.notification.showErrorPopup('Допустимые форматы для зарузки: "gif", "jpg", "jpeg", "png"');
+    }
+
     reader.readAsDataURL(uploadFile);
     openUploadOverlay();
   };

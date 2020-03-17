@@ -17,7 +17,7 @@
   };
 
   var validateHashtagsList = function () {
-    var hashtags = inputHashtagsElement.value.replace(/\s+/g, ' ').toLowerCase().split(' ');
+    var hashtags = inputHashtagsElement.value.trim().replace(/\s+/g, ' ').toLowerCase().split(' ');
     var errorMessage = '';
     var successMessage = '';
     var uniquHashtags = [];
