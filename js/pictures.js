@@ -4,6 +4,8 @@
   var picturesContainerElement = document.querySelector('.pictures');
   var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
+  var imgFilterElement = document.querySelector('.img-filters');
+
   var createPictureElement = function (picture) {
     var pictureElement = pictureTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = picture.url;
@@ -15,25 +17,30 @@
 
   var renderPictures = function (data) {
     var pictures = data;
-
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < pictures.length; i++) {
-      var pictureElement = createPictureElement(pictures[i]);
 
-      window.preview.register(pictureElement, pictures[i]);
-
+    pictures.forEach(function (item) {
+      var pictureElement = createPictureElement(item);
+      window.preview.register(pictureElement, item);
       fragment.appendChild(pictureElement);
-    }
+    });
+
     picturesContainerElement.appendChild(fragment);
   };
 
   var onDownloadSuccess = function (data) {
+    window.pictures.publications = data.slice();
     renderPictures(data);
+    imgFilterElement.classList.remove('img-filters--inactive');
   };
 
-  var onDownloadError = function (errorMessage) {};
+  var onDownloadError = function (errorMessage) {
+    window.notification.showErrorPopup(errorMessage, 'УПС');
+  };
 
   window.pictures = {
+    publications: [],
+    renderPictures: renderPictures,
     onDownloadSuccess: onDownloadSuccess,
     onDownloadError: onDownloadError
   };
