@@ -1,5 +1,5 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
-
+* Зима 2019 - 2020
 * Студент: [Ольга Мосунова](https://up.htmlacademy.ru/javascript/19/user/1162533).
 * Наставник: [Анастасия Шишова](https://up.htmlacademy.ru/javascript/19/user/830807).
 
